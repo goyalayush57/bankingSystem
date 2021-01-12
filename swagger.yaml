@@ -1,0 +1,453 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Banking API
+  description: REST API Endpoints exposed by 'Simple Bank'.
+host: >-
+  localhost:8080
+basePath: /simple
+schemes:
+  - http
+tags:
+- name: "Login"
+  description: "Everything related to user authentication and authorization"
+- name: "Employee"
+  description: "CRUD operation related to employees"
+- name: "Customer"
+  description: "Everything related to customer"
+- name: "Account"
+  description: "Everything related to Account"
+  
+paths:
+
+  '/v1/login/':
+    post:
+      tags:
+      - "Login"
+      description:
+        Returns bearer token
+      parameters:
+      - in: body
+        name: credentials
+        schema:
+          type: object
+          properties:
+            userId:
+              type: string
+            password:
+              type: string
+            
+      responses:
+        '200':
+          description: Successfully authenticated user and returned bearer token
+          schema:
+           type: string
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'  
+ 
+  '/v1/employees/':
+    post:
+      tags:
+      - "Employee"
+      security:
+        - bearerAuth: []
+      description:
+        Creates new employee and returns the employee ID
+      parameters:
+      - in: body
+        name: Employee List
+        description: contains Employee List
+        schema:
+          type: array
+          items:
+            $ref : '#/definitions/userCreated'
+      responses:
+        '200':
+          description: Successfully created employees list
+          schema:
+           type: array
+           items:
+            $ref : '#/definitions/employee'
+        '401':
+          description: Bearer token missing or invalid
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+    get:
+      tags:
+      - "Employee"
+      security:
+        - bearerAuth: []
+      description:
+        Gets the list of employees
+      responses:
+        '200':
+          description: List of employees
+          schema:
+           type: array
+           items:
+            $ref : '#/definitions/employee'
+        '401':
+          description: Bearer token missing or invalid
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+  '/v1/employees/{employeeId}':
+    delete:
+      tags:
+      - "Employee"
+      parameters:
+        - $ref: '#/parameters/EmployeeId'
+      security:
+        - bearerAuth: []
+      description:
+        deletes employee
+      responses:
+        '200':
+          description: Employee Deleted
+        '401':
+          description: Bearer token missing or Unauthorized
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+  
+  '/v1/customers/':
+    post:
+      tags:
+      - "Customer"
+      security:
+        - bearerAuth: []
+      description:
+        Creates new customers and returns the customers ID
+      parameters:
+      - in: body
+        name: customers List
+        description: contains list of customer id
+        schema:
+          type: array
+          items:
+            type: string
+            description: contains list of customerId
+      responses:
+        '200':
+          description: Successfully created customer list
+          schema:
+           type: array
+           items:
+            $ref : '#/definitions/customer'
+        '401':
+          description: Bearer token missing or invalid
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+    get:
+      tags:
+      - "Customer"
+      security:
+        - bearerAuth: []
+      description:
+        Gets the list of customers
+      responses:
+        '200':
+          description: List of customers
+          schema:
+           type: array
+           items:
+            $ref : '#/definitions/customer'
+        '401':
+          description: Bearer token missing or invalid
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+            
+  '/v1/customers/{customerId}':
+    delete:
+      tags:
+      - "Customer"
+      parameters:
+        - $ref: '#/parameters/CustomerId'
+      security:
+        - bearerAuth: []
+      description:
+        deletes employee
+      responses:
+        '200':
+          description: Employee Deleted
+        '401':
+          description: Bearer token missing or Unauthorized
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+            
+  '/v1/customer/{userId}/accounts/{accountId}':
+    get:
+      tags:
+      - "Account"
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/parameters/UserId'
+        - $ref: '#/parameters/AccountId'
+      description:
+        gets user account details,user ID can be admin id as well as employee id
+      responses:
+        '200':
+          description: List of customers
+          schema:
+            $ref : '#/definitions/account'
+        '401':
+          description: Bearer token missing or invalid
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/error'
+      
+  
+            
+definitions:
+
+  admin:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the admin
+        readOnly: true
+        example: SA-123
+      createdAt:
+        type: string
+        format: date-time
+        description: creation time of account
+      name:
+        type: string
+        description: Name of the admin
+      kycID:
+        type: string
+        default: not verified
+        description: kyc id,used to get kyc details
+      accountID:
+        type: string
+        description: account id of admin
+      mobile:
+        type: number
+        description: Mobile number
+      email:
+        type: string
+        description: email ID
+  
+  employee:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the employee
+        readOnly: true
+        example: SE-123
+      createdAt:
+        type: string
+        format: date-time
+        description: creation time of account
+      name:
+        type: string
+        description: Name of the employee
+      kycID:
+        type: string
+        default: not verified
+        description: kyc id,used to get kyc details
+      accountID:
+        type: string
+        description: account id of user
+      mobile:
+        type: number
+        description: Mobile number
+      email:
+        type: string
+        description: email ID
+  
+  customer:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the customer
+        readOnly: true
+        example: SC-123
+      createdAt:
+        type: string
+        format: date-time
+        description: creation time of account
+      name:
+        type: string
+        description: Name of the customer
+      kycID:
+        type: string
+        description: kyc id,used to get kyc details
+        default: not verified
+      accountID:
+        type: string
+        description: account id of customer
+      mobile:
+        type: number
+        description: Mobile number
+      email:
+        type: string
+        description: email ID
+  
+  transaction:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 123
+      createdAt:
+        type: string
+        format: date-time
+        description: creation date and time of transaction
+      type:
+        type: string
+        description: type of transaction, debit,credit,etc
+      amount:
+        type: integer
+        format: Big INT
+      
+  
+  account:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Account number
+        readOnly: true
+        example: 123
+      createdAt:
+        type: string
+        format: date-time
+        description: creation time of account
+      type:
+        type: string
+        description: type of account,savings,current,etc
+        default: savings
+      balance:
+        type: integer
+        format: Big FLOAT
+        description: remaining balance in account
+      recentTransactions:
+        type: array
+        items:
+          $ref : '#/definitions/transaction'
+        description: contains top transactions not all transaction
+      
+  
+  kycDetails:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: kyc id,for application reference
+        readOnly: true
+        example: 123
+      createdAt:
+        type: string
+        format: date-time
+        description: Verification time of KYC
+      kycId:
+        type: string
+        description: Government kyc Identification number
+      type:
+        type: string
+        description: card through which kyc is done
+        enum: ['voterId','Aadhar Card']
+  
+  userCreated:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: kyc id,for application reference
+        example: SE-123 
+      password:
+        type: string
+        description: this password cannot be generated again please keep it safe
+        
+  error:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: string
+          description:
+            type: string
+      
+parameters:
+  AccountId:
+    name: accountId
+    type: string
+    in: path
+    required: true
+    description: accountId
+    
+  EmployeeId:
+    name: employeeId
+    type: string
+    in: path
+    required: true
+    description: EmployeeId
+  
+  UserId:
+    name: userId
+    type: string
+    in: path
+    required: true
+    description: UserId
+
+  CustomerId:
+    name: customerId
+    type: string
+    in: path
+    required: true
+    description: EmployeeId
+  
+  ClientId:
+    name: clientId
+    type: string
+    in: path
+    required: true
+    description: ClientID
+
+  SiteId:
+    name: siteId
+    type: string
+    in: path
+    required: true
+    description: SiteID
+
+  EndpointId:
+    name: endpointId
+    type: string
+    in: path
+    required: true
+    description: EndpointID
+    
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
