@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"src/src/db"
-	"src/src/seed"
 
 	"github.com/joho/godotenv"
 )
@@ -24,5 +23,4 @@ func main() {
 
 	database.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
 
-	seed.Load(database.DB)
 }
