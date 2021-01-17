@@ -8,11 +8,11 @@ import (
 )
 
 type AccountOperation interface {
-	Get(accountID uint32, userID uint32) (models.Account, error)
-	Create(acc models.Account, userID uint32) (models.Account, error)
-	Delete(accountID uint32, userID uint32) error
+	Get(userID string) (models.Account, error)
+	Create(acc models.Account, userID string) (models.Account, error)
+	Delete(accountID uint64, userID string) error
 	GetAll() ([]models.Account, error)
-	Update(acc models.Account) error
+	Update(acc models.Account) (models.Account, error)
 }
 
 func NewAccountService() AccountOperation {
@@ -21,9 +21,9 @@ func NewAccountService() AccountOperation {
 
 type account struct{}
 
-func (a *account) Get(accountID uint32, userID uint32) (models.Account, error) {
+func (a *account) Get(userID string) (models.Account, error) {
 	acc := models.Account{}
-	err := db.Debug().Model(models.Account{}).Where("id = ? and user_id = ?", accountID, userID).Take(&acc).Error
+	err := db.Debug().Model(models.Account{}).Where("user_id = ?", userID).Take(&acc).Error
 	return acc, err
 }
 
@@ -33,7 +33,7 @@ func (a *account) GetAll() ([]models.Account, error) {
 	return accs, err
 }
 
-func (a *account) Create(acc models.Account, userID uint32) (models.Account, error) {
+func (a *account) Create(acc models.Account, userID string) (models.Account, error) {
 	var err error
 	err = db.Debug().Model(&models.Account{}).Create(&acc).Error
 	if err != nil {
@@ -42,7 +42,7 @@ func (a *account) Create(acc models.Account, userID uint32) (models.Account, err
 	return acc, nil
 }
 
-func (d *account) Update(acc models.Account) error {
+func (d *account) Update(acc models.Account) (models.Account, error) {
 	var err error
 
 	err = db.Debug().Model(&models.Account{}).Where("id = ?", acc.ID).Updates(
@@ -51,12 +51,18 @@ func (d *account) Update(acc models.Account) error {
 		},
 	).Error
 	if err != nil {
-		return err
+		return models.Account{}, err
 	}
-	return nil
+
+	// This is the display the updated kyaccount
+	err = db.Debug().Model(&models.Account{}).Where("id = ?", acc.ID).Take(&acc).Error
+	if err != nil {
+		return models.Account{}, err
+	}
+	return acc, nil
 }
 
-func (d *account) Delete(accountID uint32, userID uint32) error {
+func (d *account) Delete(accountID uint64, userID string) error {
 	db = db.Debug().Model(&models.Account{}).Where("id = ? and user_id = ?", accountID, userID).Take(&models.Account{}).Delete(&models.Account{})
 
 	if db.Error != nil {

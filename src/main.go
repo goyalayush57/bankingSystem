@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"src/src/controller"
 	"src/src/db"
 
 	"github.com/joho/godotenv"
@@ -22,5 +23,7 @@ func main() {
 	}
 
 	database.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
-
+	s := &controller.Server{}
+	s.Intialize()
+	s.Run(":8081")
 }

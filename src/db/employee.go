@@ -2,26 +2,27 @@ package db
 
 import (
 	"errors"
+
 	"src/src/models"
 
 	"github.com/jinzhu/gorm"
 )
 
 type EmployeeOperation interface {
-	Get(employeeID uint32) (models.Employee, error)
+	Get(employeeID string) (models.Employee, error)
 	GetAll() ([]models.Employee, error)
 	Create(models.Employee) (models.Employee, error)
-	Update(models.Employee) error
-	Delete(employeeID uint32) error
+	Update(models.Employee) (models.Employee, error)
+	Delete(employeeID string) error
 }
 
-func NewEmployeeService() EmployeeOperation {
+func NewEmployeeOperation() EmployeeOperation {
 	return &employee{}
 }
 
 type employee struct{}
 
-func (e *employee) Get(employeeID uint32) (models.Employee, error) {
+func (e *employee) Get(employeeID string) (models.Employee, error) {
 	emp := models.Employee{}
 	err := db.Debug().Model(models.Employee{}).Where("id = ?", employeeID).Take(&emp).Error
 	return emp, err
@@ -33,10 +34,10 @@ func (e *employee) GetAll() ([]models.Employee, error) {
 	return emps, err
 }
 
-func (d *employee) Create(c models.Employee) (models.Employee, error) {
+func (e *employee) Create(c models.Employee) (models.Employee, error) {
 	var err error
-	c.Account = models.Account{}
-	c.KycDetails = models.KYCDetails{}
+	//c.Account = &models.Account{}
+	//c.KycDetails = &models.KYCDetails{}
 	err = db.Debug().Model(&models.Employee{}).Create(&c).Error
 	if err != nil {
 		return c, err
@@ -44,7 +45,7 @@ func (d *employee) Create(c models.Employee) (models.Employee, error) {
 	return c, nil
 }
 
-func (d *employee) Update(c models.Employee) error {
+func (e *employee) Update(c models.Employee) (models.Employee, error) {
 	var err error
 
 	err = db.Debug().Model(&models.Employee{}).Where("id = ?", c.ID).Updates(
@@ -54,15 +55,22 @@ func (d *employee) Update(c models.Employee) error {
 			AccountID: c.AccountID,
 			Mobile:    c.Mobile,
 			Password:  c.Password,
+			UpdatedAt: c.UpdatedAt,
 		},
 	).Error
+
 	if err != nil {
-		return err
+		return models.Employee{}, err
 	}
-	return nil
+	// This is the display the updated user
+	err = db.Debug().Model(&models.Employee{}).Where("id = ?", c.ID).Take(&c).Error
+	if err != nil {
+		return models.Employee{}, err
+	}
+	return c, nil
 }
 
-func (d *employee) Delete(employeeID uint32) error {
+func (e *employee) Delete(employeeID string) error {
 	db = db.Debug().Model(&models.Employee{}).Where("id = ?", employeeID).Take(&models.Employee{}).Delete(&models.Employee{})
 
 	if db.Error != nil {

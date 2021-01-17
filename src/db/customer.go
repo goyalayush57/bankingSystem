@@ -8,20 +8,22 @@ import (
 )
 
 type CustomerOperation interface {
-	Get(customerID uint32) (models.Customer, error)
+	Get(customerID string) (models.Customer, error)
 	GetAll() ([]models.Customer, error)
 	Create(models.Customer) (models.Customer, error)
-	Update(models.Customer) error
-	Delete(customerID uint32) error
+	Update(models.Customer) (models.Customer, error)
+	Delete(customerID string) error
+	UnlinkKYC(customer models.Customer) error
+	UnlinkAccount(customer models.Customer) error
 }
 
-func NewCustomerService() CustomerOperation {
+func NewCustomerOperation() CustomerOperation {
 	return &customer{}
 }
 
 type customer struct{}
 
-func (d *customer) Get(customerID uint32) (models.Customer, error) {
+func (d *customer) Get(customerID string) (models.Customer, error) {
 	c := models.Customer{}
 	err := db.Debug().Model(models.Customer{}).Where("id = ?", customerID).Take(&c).Error
 	return c, err
@@ -35,8 +37,8 @@ func (d *customer) GetAll() ([]models.Customer, error) {
 
 func (d *customer) Create(c models.Customer) (models.Customer, error) {
 	var err error
-	c.Account = models.Account{}
-	c.KycDetails = models.KYCDetails{}
+	//c.Account = &models.Account{}
+	//	c.KycDetails = &models.KYCDetails{}
 	err = db.Debug().Model(&models.Customer{}).Create(&c).Error
 	if err != nil {
 		return c, err
@@ -50,7 +52,7 @@ func (d *customer) Create(c models.Customer) (models.Customer, error) {
 	return c, nil
 }
 
-func (d *customer) Update(c models.Customer) error {
+func (d *customer) Update(c models.Customer) (models.Customer, error) {
 	var err error
 
 	err = db.Debug().Model(&models.Customer{}).Where("id = ?", c.ID).Updates(
@@ -60,21 +62,21 @@ func (d *customer) Update(c models.Customer) error {
 			AccountID: c.AccountID,
 			Mobile:    c.Mobile,
 			Password:  c.Password,
+			UpdatedAt: c.UpdatedAt,
 		},
 	).Error
 	if err != nil {
-		return err
+		return models.Customer{}, err
 	}
-	// if p.ID != 0 {
-	// 	err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
-	// 	if err != nil {
-	// 		return &Post{}, err
-	// 	}
-	// }
-	return nil
+	// This is the display the updated user
+	err = db.Debug().Model(&models.Customer{}).Where("id = ?", c.ID).Take(&c).Error
+	if err != nil {
+		return models.Customer{}, err
+	}
+	return c, nil
 }
 
-func (d *customer) Delete(customerID uint32) error {
+func (d *customer) Delete(customerID string) error {
 	db = db.Debug().Model(&models.Customer{}).Where("id = ?", customerID).Take(&models.Customer{}).Delete(&models.Customer{})
 
 	if db.Error != nil {
@@ -84,4 +86,12 @@ func (d *customer) Delete(customerID uint32) error {
 		return db.Error
 	}
 	return nil
+}
+
+func (d *customer) UnlinkKYC(cust models.Customer) error {
+	return db.Debug().Exec("Update customers SET kyc_id = NULL where id = ?", cust.ID).Error
+}
+
+func (d *customer) UnlinkAccount(cust models.Customer) error {
+	return db.Debug().Exec("Update customers SET account_id = NULL where id = ?", cust.ID).Error
 }

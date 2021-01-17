@@ -1,36 +1,42 @@
 package seed
 
 import (
+	"fmt"
 	"log"
 	"src/src/models"
+	"src/src/util"
 
 	"github.com/jinzhu/gorm"
 )
 
-var admin = []models.Admin{
-	models.Admin{
-		Email:    "steven@gmail.com",
-		Password: "password",
-		Mobile:   "1515",
-	},
-}
-
 func Load(db *gorm.DB) {
-
-	err := db.Debug().DropTableIfExists(&models.Admin{}, &models.KYCDetails{}).Error
-	if err != nil {
-		log.Fatalf("cannot drop table: %v", err)
+	var admin = []models.Admin{
+		models.Admin{
+			Email:    "ayush@gmail.com",
+			Password: "password",
+			Mobile:   "1515",
+		},
 	}
-	err = db.Debug().AutoMigrate(&models.Admin{}, &models.KYCDetails{}).Error
-	if err != nil {
-		log.Fatalf("cannot migrate table: %v", err)
-	}
+	// err := db.Debug().DropTableIfExists(&models.Admin{}).Error
+	// if err != nil {
+	// 	log.Fatalf("cannot drop table: %v", err)
+	// }
+	// err = db.Debug().AutoMigrate(&models.Admin{}).Error
+	// if err != nil {
+	// 	log.Fatalf("cannot migrate table: %v", err)
+	// }
 
-	// for i := range admin {
-	// 	err = db.Debug().Model(&models.Admin{}).Create(&admin[i]).Error
-	// 	if err != nil {
-	// 		log.Fatalf("cannot seed users table: %v", err)
-	// 	}
+	for i := range admin {
+		encr, _ := util.Hash(admin[i].Password)
+		admin[i].Password = string(encr)
+		err := db.Debug().Model(&models.Admin{}).Create(&admin[i]).Error
+		if err != nil {
+			log.Fatalf("cannot seed users table: %v", err)
+		}
+		fmt.Println("############Admin Details####################")
+		fmt.Printf("\n\n%+v\n\n", admin[i])
+		fmt.Println("#################################")
+	}
 
 	// 	// err = db.Debug().Model(&models.Post{}).Create(&posts[i]).Error
 	// 	// if err != nil {
