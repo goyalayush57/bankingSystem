@@ -3,8 +3,9 @@
 # API Contract 
 https://goyalayush57.github.io/swaggerTemplate/
 
-
+# About
 This repo exposes some basic set of APIs that can be used to perform CRUD operation for employee and customer.
+
 # Features
 - Admin role with features
     - Sign in/out as admin
