@@ -39,8 +39,9 @@ This repo exposes some basic set of APIs that can be used to perform CRUD operat
     Username : sa-100001
     Password : 1234
 
-# Table used
-[draw.io](Draw.io)
+# Tables used
+
+https://github.com/goyalayush57/bankingSystem/blob/main/table/BlockRepresentation.PNG
 
 # Tech/Important Library Used
 - Go
