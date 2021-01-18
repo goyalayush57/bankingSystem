@@ -1,6 +1,7 @@
 # Simple Bank APIs
 
-# API Contract - [Swagger](https://goyalayush57.github.io/swaggerTemplate/)
+# API Contract 
+[Swagger](https://goyalayush57.github.io/swaggerTemplate/)
 
 
 This repo exposes some basic set of APIs that can be used to perform CRUD operation for employee and customer.
