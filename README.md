@@ -39,6 +39,10 @@ This repo exposes some basic set of APIs that can be used to perform CRUD operat
     Username : sa-100001
     Password : 1234
 
+>After starting the project for first time it will create the tables
+>you can comment the code inside https://github.com/goyalayush57/bankingSystem/blob/main/src/db/base.go#L31
+>to avoid loss of data and recreation of table
+
 # Tables used
 
 https://github.com/goyalayush57/bankingSystem/blob/main/table/BlockRepresentation.PNG
