@@ -1,0 +1,643 @@
+{
+	"info": {
+		"_postman_id": "04cf75f4-e9c2-49c1-a702-f41bae9bf963",
+		"name": "Simple Bank",
+		"description": "It Contains basic CRUD operation related to Employee and Customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Welcome To Simple Bank",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"sa-10001\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"sa-10001\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"login"
+							]
+						},
+						"description": "It outputs the bearer token please use it for subsequent calls"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get All Customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTA1NDEsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.WBcsSujrBmtk1JIdx_rTR0VlXVhd8TPNj94K60U8Vp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers"
+							]
+						},
+						"description": "Get all the registered customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTA1NDEsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.WBcsSujrBmtk1JIdx_rTR0VlXVhd8TPNj94K60U8Vp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ayush@gmail.com\",\n    \"mobile\":\"1234567890\",\n    \"name\":\"Ayush Goyal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Customer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTA1NDEsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.WBcsSujrBmtk1JIdx_rTR0VlXVhd8TPNj94K60U8Vp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ayush@gmail.com\",\n    \"mobile\":\"1234567890\",\n    \"name\":\"Ayush Goyal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify a customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTA1NDEsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.WBcsSujrBmtk1JIdx_rTR0VlXVhd8TPNj94K60U8Vp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\":\"0123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create and link Customer KYC",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTU2MzMsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.O5PIkSa5kc8lxp-13j_RiCjLfu2gPsVU42KWNjem5kQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\" :\"aadhar\",\n    \"kyc_number\":\"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001/kycs",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001",
+								"kycs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create and link Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTQyNzAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.QXVCgbcjaJTEzgjuB8TtFzWIulfgRXdRNfu4Njniskk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"balance\":1000.2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTQyNzAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.QXVCgbcjaJTEzgjuB8TtFzWIulfgRXdRNfu4Njniskk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ayush@gmail.com\",\n    \"mobile\":\"1234567890\",\n    \"name\":\"Ayush Goyal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlink Customer KYC",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTU2MzMsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.O5PIkSa5kc8lxp-13j_RiCjLfu2gPsVU42KWNjem5kQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001/accounts/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlink Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTQyNzAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.QXVCgbcjaJTEzgjuB8TtFzWIulfgRXdRNfu4Njniskk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "UNLINK",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001/accounts/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Get All Employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTA1NDEsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.WBcsSujrBmtk1JIdx_rTR0VlXVhd8TPNj94K60U8Vp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers"
+							]
+						},
+						"description": "Get all the registered customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTY3ODcsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.AJuZY2NhHi8XJ16U-ZJp-a4c4vfigzwIp2lErJLZDNA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ayush@gmail.com\",\n    \"mobile\":\"1234567890\",\n    \"name\":\"Ayush Goyal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/employees",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Employee",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTY3ODcsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.AJuZY2NhHi8XJ16U-ZJp-a4c4vfigzwIp2lErJLZDNA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ayush@gmail.com\",\n    \"mobile\":\"1234567890\",\n    \"name\":\"Ayush Goyal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/employees/se-10001",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"employees",
+								"se-10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify a employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTA1NDEsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.WBcsSujrBmtk1JIdx_rTR0VlXVhd8TPNj94K60U8Vp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\":\"0123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTQyNzAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.QXVCgbcjaJTEzgjuB8TtFzWIulfgRXdRNfu4Njniskk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ayush@gmail.com\",\n    \"mobile\":\"1234567890\",\n    \"name\":\"Ayush Goyal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/customers/sc-10001",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"customers",
+								"sc-10001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MTA5MTMxNzYsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiJzYS0xMDAwMSJ9.Ed4T9ct86ezYslZMf8ezFFwOGykHbsqZc4ARabfjkak",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

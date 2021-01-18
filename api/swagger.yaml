@@ -20,7 +20,7 @@ tags:
   
 paths:
 
-  '/v1/login/':
+  '/login/':
     post:
       tags:
       - "Login"
@@ -49,7 +49,7 @@ paths:
           schema:
             $ref: '#/definitions/error'  
  
-  '/v1/employees/':
+  '/employees/':
     post:
       tags:
       - "Employee"
@@ -98,7 +98,7 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/error'
-  '/v1/employees/{employeeId}':
+  '/employees/{employeeId}':
     delete:
       tags:
       - "Employee"
@@ -118,7 +118,7 @@ paths:
           schema:
             $ref: '#/definitions/error'
   
-  '/v1/customers/':
+  '/customers/':
     post:
       tags:
       - "Customer"
@@ -169,7 +169,7 @@ paths:
           schema:
             $ref: '#/definitions/error'
             
-  '/v1/customers/{customerId}':
+  '/customers/{customerId}':
     delete:
       tags:
       - "Customer"
@@ -189,17 +189,17 @@ paths:
           schema:
             $ref: '#/definitions/error'
             
-  '/v1/customer/{userId}/accounts/{accountId}':
+  '/customer/{customerId}/accounts/{accountId}':
     get:
       tags:
       - "Account"
       security:
         - bearerAuth: []
       parameters:
-        - $ref: '#/parameters/UserId'
+        - $ref: '#/parameters/CustomerId'
         - $ref: '#/parameters/AccountId'
       description:
-        gets user account details,user ID can be admin id as well as employee id
+        gets customer account details
       responses:
         '200':
           description: List of customers
