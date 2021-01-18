@@ -51,6 +51,7 @@ https://github.com/goyalayush57/bankingSystem/blob/main/table/BlockRepresentatio
 - Go
 - PostGres
 - JWT for authentication
+- bcrypt encyption of password
 - GORM for ORM
 
 # Code Design Walkthrough
