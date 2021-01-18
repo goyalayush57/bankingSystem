@@ -22,7 +22,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\":\"sa-10001\",\n    \"password\":\"password\"\n}",
+							"raw": "{\n    \"id\":\"sa-10001\",\n    \"password\":\"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
