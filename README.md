@@ -20,9 +20,9 @@ This repo exposes some basic set of APIs that can be used to perform CRUD operat
     - Get details of a customer
     - Delete customer
     - Get account balance for an account
-    ~~- Transfer money from one account to another~~
-    ~~- Print Account statement of an account for a time range in pdf~~
-    ~~- Calculate interest for the money annually (at 3.5% p.a.) and update the account balance~~
+    - ~~Transfer money from one account to another~~
+    - ~~Print Account statement of an account for a time range in pdf~~
+    - ~~Calculate interest for the money annually (at 3.5% p.a.) and update the account balance~~
 
 # Local Setup
 ### Prerequisite
