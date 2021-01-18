@@ -13,7 +13,7 @@ func Load(db *gorm.DB) {
 	var admin = []models.Admin{
 		models.Admin{
 			Email:    "ayush@gmail.com",
-			Password: "password",
+			Password: "1234",
 			Mobile:   "1515",
 		},
 	}

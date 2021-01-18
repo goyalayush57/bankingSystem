@@ -28,6 +28,7 @@ func (server *DB) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbNam
 			fmt.Printf("We are connected to the %s database", Dbdriver)
 		}
 	}
+
 	//First Time Activity
 	err = db.Debug().DropTableIfExists(&models.Admin{}, &models.Customer{}, &models.Employee{}, &models.Transaction{}, &models.Account{}, &models.KYCDetails{}).Error
 	if err != nil {
